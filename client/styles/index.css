@@ -1,0 +1,59 @@
+
+body{
+  margin: 0px;
+  padding: 0px;
+}
+#map {
+  height: 100vh;
+}
+
+#main {
+  position: relative;
+}
+
+.search-container {
+  z-index: 1000;
+  position: absolute;
+  min-height: 50px;
+  width: 200px;
+  top: 20px;
+  left: 20px;
+  background-color: white;
+  padding-top: 25px;
+  padding-left: 25px;
+  display: none;
+}
+
+.search-container input {
+  width: auto;
+}
+
+.search-results {
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.result-item {
+  margin: 10px;
+}
+
+#toggle-search-btn {
+  position: absolute;
+  left: 50px;
+  top: 10px;
+  z-index: 9999;
+}
+
+/* for ipad air/mini onwards */
+@media (min-width: 768px) {
+  .search-container {
+      display: block;
+      min-width: 300px;
+      top: 30px;
+  }
+
+  #toggle-search-btn {
+      display: none;
+  }
+}
