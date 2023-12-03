@@ -1,19 +1,19 @@
 module.exports = mongoose => {
-  const schema = mongoose.Schema(
+  const schema = new mongoose.Schema(
     {
-      name: String,
-      description: String,
-      latitude: Number,
-      longitude: Number,
-      postcode: Number,
-      level: String,
-      image: String,
-      temperature: String,
-      source: String,
-      verified: Boolean,
-      verifiedBy: String,
-      operator: String,
-      date: Date
+      name: { type: String, required: true },
+      description: { type: String },
+      latitude: { type: Number, required: true },
+      longitude: { type: Number, required: true },
+      postcode: { type: String },
+      level: { type: String },
+      image: { type: String },
+      temperature: { type: String },
+      source: { type: String },
+      verified: { type: Boolean, default: false },
+      verifiedBy: { type: String },
+      operator: { type: String },
+      date: { type: Date, default: Date.now }
     },
     { timestamps: true }
   );

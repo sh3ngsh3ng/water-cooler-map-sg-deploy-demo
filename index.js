@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
 const db = require("./sever/models");
+
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -38,7 +39,6 @@ app.get("/", (req, res) => {
 });
 
 require("./sever/routes/waterCoolerPoints.route.js")(app);
-
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
