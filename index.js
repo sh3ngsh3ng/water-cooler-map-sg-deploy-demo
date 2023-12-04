@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8080"
 };
 
 app.use(cors(corsOptions));
@@ -12,8 +12,9 @@ app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 app.use(express.json());
 
+app.set('view engine', 'hbs');
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express.
 app.use(express.static('public'))
@@ -35,7 +36,7 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome~~~~~" });
+  res.render("index.hbs")
 });
 
 require("./sever/routes/waterCoolerPoints.route.js")(app);

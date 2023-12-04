@@ -14,11 +14,13 @@ export function initMap() {
 
   function showPosition(position) {
     // set map based on user's position
-    if (position) {
-      map.setView([position.coords.latitude, position.coords.longitude], 13);
-    } else {
-      map.setView(singapore, 13);
-    }
+    // if (position) {
+    //   map.setView([position.coords.latitude, position.coords.longitude], 13);
+    // } else {
+    //   map.setView(singapore, 13);
+    // }
+
+    map.setView(singapore, 12);
   }
 
   L.control.zoom({
