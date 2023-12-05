@@ -9,37 +9,76 @@ document.addEventListener("DOMContentLoaded", async function () {
   const searchResultLayer = L.layerGroup();
   searchResultLayer.addTo(map);
 
-  setupEventHandlers();
+  setupData();
 
-  async function setupEventHandlers() {
+  async function setupData() {
     const results = await find();
-    console.log('######', results)
+    // console.log('######', results)
     displaySearchResults(results);
   }
 
   function displaySearchResults(results) {
-
-    for (let r of results) {
-      addMarkerToMap(map, r);
+    for (let record of results) {
+      addMarkerToMap(map, record);
     }
   }
 
-  function addMarkerToMap(map, r) {
-    const lat = r.latitude;
-    const lng = r.longitude;
+  function addMarkerToMap(map, record) {
+    const lat = record.latitude;
+    const lng = record.longitude;
     const coordinate = [lat, lng];
     const marker = L.marker(coordinate);
     marker.addTo(searchResultLayer);
     marker.bindPopup(function () {
       const element = document.createElement('div');
-      element.innerHTML = `<h1>${r.name}</h1>
-                <button>Click me</button>;
-            `;
+      element.innerHTML = `
+      <img class="img-thumbnail points-image" src=${record.image ? record.image : '/images/noimage.jpeg'} />
+      <h5>${record.name}</h5>
+      <div class="description">
+        <span class="label">Postcode</span>
+        <span class="value">${record.postcode}</span>
+      </div>
+      <div class="description">
+        <span class="label">Level</span>
+        <span class="value">${record.level}</span>
+      </div>
+      <div class="description">
+        <span class="label">Description</span>
+        <span class="value">${record.description}</span>
+      </div>
+      <div class="description">
+        <span class="label">Temperature</span>
+        <span class="value">${record.temperature}</span>
+      </div>
+      <div class="description">
+        <span class="label">Latitude</span>
+        <span class="value">${record.latitude}</span>
+      </div>
+      <div class="description">
+        <span class="label">Longitude</span>
+        <span class="value">${record.longitude}</span>
+      </div>
+      <div class="description">
+        <span class="label">Source</span>
+        <span class="value">${record.source}</span>
+      </div>
+      <div class="description">
+        <span class="label">VerifiedBy</span>
+        <span class="value">${record.verifiedBy}</span>
+      </div>
+      <div class="description">
+        <span class="label">Operator</span>
+        <span class="value">${record.operator}</span>
+      </div>
+      <button class="btn btn-primary">Go There</button>
+      `;
       const button = element.querySelector("button");
       button.addEventListener("click", function () {
         alert("do whatever you want here");
       })
       return element;
+    }, {
+      keepInView: true
     });
     // marker.addEventListener("click", function () {
     //   map.flyTo(coordinate, 16);

@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+const path = require("path")
 const app = express();
 
 const corsOptions = {
@@ -17,7 +17,10 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({ extended: false }));
 
 // To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express.
-app.use(express.static('public'))
+// app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public'), {
+  index: false
+}));
 
 const db = require("./sever/models");
 

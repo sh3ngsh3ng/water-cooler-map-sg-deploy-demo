@@ -44,6 +44,23 @@ body{
   top: 10px;
   z-index: 9999;
 }
+.points-image{
+  margin-top: 20px;
+}
+.label{
+  display: block;
+  width: 100px;
+  font-weight: 300;
+}
+.value{
+  display: block;
+  width: 200px;
+}
+.description{
+  display: flex;
+  align-content: center;
+  margin-bottom: 10px;
+}
 
 /* for ipad air/mini onwards */
 @media (min-width: 768px) {
