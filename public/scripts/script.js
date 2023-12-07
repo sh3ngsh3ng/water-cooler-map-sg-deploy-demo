@@ -4,7 +4,6 @@ import { find } from "./data.js";
 document.addEventListener("DOMContentLoaded", async function () {
 
   const map = initMap(); // create the map
-
   // all the markers for the search will be inside here
   const searchResultLayer = L.layerGroup();
   searchResultLayer.addTo(map);
@@ -27,7 +26,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     const lat = record.latitude;
     const lng = record.longitude;
     const coordinate = [lat, lng];
-    const marker = L.marker(coordinate);
+    let waterIcon = null
+    if (record.verified) {
+      waterIcon = L.icon({
+        iconUrl: './images/water-green.png',
+        iconSize: [24, 24], // size of the icon
+     });
+    } else {
+      waterIcon = L.icon({
+        iconUrl: './images/water-red.png',
+        iconSize: [24, 24], // size of the icon
+      });
+    }
+
+    const marker = L.marker(coordinate, {icon: waterIcon});
     marker.addTo(searchResultLayer);
     marker.bindPopup(function () {
       const element = document.createElement('div');
@@ -64,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       </div>
       <div class="description">
         <span class="label">VerifiedBy</span>
-        <span class="value">${record.verifiedBy}</span>
+        <span class="value">${record.verifiedBy || 'N/A'}</span>
       </div>
       <div class="description">
         <span class="label">Operator</span>

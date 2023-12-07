@@ -25,12 +25,12 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the WaterCoolerPoint."
       });
     });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all WaterCoolerPoint from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   const condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
@@ -42,10 +42,15 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving WaterCoolerPoint."
       });
     });
 };
+
+// render WaterCoolerPoint form
+exports.renderForm = (req, res) => {
+  res.render("addPoints.hbs");
+}
 
 // Find a single WaterCoolerPoint with an id
 exports.findOne = (req, res) => {
@@ -54,13 +59,13 @@ exports.findOne = (req, res) => {
   WaterCoolerPoints.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found Tutorial with id " + id });
+        res.status(404).send({ message: "Not found WaterCoolerPoint with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving Tutorial with id=" + id });
+        .send({ message: "Error retrieving WaterCoolerPoint with id=" + id });
     });
 };
 
@@ -78,18 +83,18 @@ exports.update = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`
+          message: `Cannot update WaterCoolerPoint with id=${id}. Maybe WaterCoolerPoint was not found!`
         });
-      } else res.send({ message: "Tutorial was updated successfully." });
+      } else res.send({ message: "WaterCoolerPoint was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: "Error updating WaterCoolerPoint with id=" + id
       });
     });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a WaterCoolerPoint with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -97,38 +102,38 @@ exports.delete = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+          message: `Cannot delete WaterCoolerPoint with id=${id}. Maybe WaterCoolerPoint was not found!`
         });
       } else {
         res.send({
-          message: "Tutorial was deleted successfully!"
+          message: "WaterCoolerPoint was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id
+        message: "Could not delete WaterCoolerPoint with id=" + id
       });
     });
 };
 
-// Delete all Tutorials from the database.
+// Delete all WaterCoolerPoint from the database.
 exports.deleteAll = (req, res) => {
   WaterCoolerPoints.deleteMany({})
     .then(data => {
       res.send({
-        message: `${data.deletedCount} Tutorials were deleted successfully!`
+        message: `${data.deletedCount} WaterCoolerPoint were deleted successfully!`
       });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all tutorials."
+          err.message || "Some error occurred while removing all WaterCoolerPoint."
       });
     });
 };
 
-// Find all published Tutorials
+// Find all published WaterCoolerPoint
 exports.findAllPublished = (req, res) => {
   WaterCoolerPoints.find({ published: true })
     .then(data => {
@@ -137,7 +142,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving WaterCoolerPoint."
       });
     });
 };

@@ -19,7 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 // To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express.
 // app.use(express.static('public'))
 app.use(express.static(path.join(__dirname, 'public'), {
-  index: false
+  index: false,
+  addPoints: false
 }));
 
 const db = require("./sever/models");

@@ -3,25 +3,27 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  // Create a new waterCoolerPoints
   router.post("/", waterCoolerPoints.create);
 
   // Retrieve all waterCoolerPoints
   router.get("/", waterCoolerPoints.findAll);
 
+  router.get("/add", waterCoolerPoints.renderForm);
+
   // Retrieve all published waterCoolerPoints
   router.get("/published", waterCoolerPoints.findAllPublished);
 
-  // Retrieve a single Tutorial with id
+  // Retrieve a single waterCoolerPoints with id
   router.get("/:id", waterCoolerPoints.findOne);
 
-  // Update a Tutorial with id
+  // Update a waterCoolerPoints with id
   router.put("/:id", waterCoolerPoints.update);
 
-  // Delete a Tutorial with id
+  // Delete a waterCoolerPoints with id
   router.delete("/:id", waterCoolerPoints.delete);
 
-  // Create a new Tutorial
+  // Create a new waterCoolerPoints
   router.delete("/", waterCoolerPoints.deleteAll);
 
   app.use("/api/points", router);

@@ -19,7 +19,16 @@
 <body>
   <div id="main">
     {{!-- <button id="toggle-search-btn">Toggle Search</button> --}}
-    <div id="map"></div>
+    {{!-- <div id="loading" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div> --}}
+    <div id="map">
+      <a href="/api/points/add">
+        <div class="contribution_btn">
+          Make a contribution
+        </div>
+      </a>
+    </div>
     {{!-- <div id="search-container" class="search-container">
       <input type="text" id="search-terms" class="search-terms" />
       <button id="search-btn" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
