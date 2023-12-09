@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       waterIcon = L.icon({
         iconUrl: './images/water-green.png',
         iconSize: [24, 24], // size of the icon
-     });
+      });
     } else {
       waterIcon = L.icon({
         iconUrl: './images/water-red.png',
@@ -39,13 +39,23 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
     }
 
-    const marker = L.marker(coordinate, {icon: waterIcon});
-    marker.addTo(searchResultLayer);
-    marker.bindPopup(function () {
+    const marker = L.marker(coordinate, { icon: waterIcon }).addTo(searchResultLayer).on('click', markerOnClick);
+
+    function markerOnClick() {
+      const popupContainer = document.getElementById('popup-container')
+      popupContainer.style.left = '0';
+      document.getElementById('close-popup-btn').addEventListener('click', function () {
+        // Slide out the popup to the left
+        document.getElementById('popup-container').style.left = '-350px';
+      });
+      const popupContent = document.getElementById('popup-content');
+      // Clear previous content
+      popupContent.innerHTML = '';
       const element = document.createElement('div');
+      element.style.marginTop = "30px"
       element.innerHTML = `
       <img class="img-thumbnail points-image" src=${record.image ? record.image : '/images/noimage.jpeg'} />
-      <h5>${record.name}</h5>
+      <h5 class="mt-3">${record.name}</h5>
       <div class="description">
         <span class="label">Postcode</span>
         <span class="value">${record.postcode}</span>
@@ -60,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       </div>
       <div class="description">
         <span class="label">Temperature</span>
-        <span class="value">${record.temperature}</span>
+        <span class="value">${record.temperature || 'N/A'}</span>
       </div>
       <div class="description">
         <span class="label">Latitude</span>
@@ -88,10 +98,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       button.addEventListener("click", function () {
         alert("do whatever you want here");
       })
-      return element;
-    }, {
-      keepInView: true
-    });
+
+      popupContent.appendChild(element);
+    };
     // marker.addEventListener("click", function () {
     //   map.flyTo(coordinate, 16);
     // });
