@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Variable to store the currently highlighted marker
   let highlightedMarker = null;
+  // Variable to store the previously validated status
   let previousStatus = null;
 
   // Function to init data
