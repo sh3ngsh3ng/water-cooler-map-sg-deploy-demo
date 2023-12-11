@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Variable to store the currently highlighted marker
   let highlightedMarker = null;
+  let previousStatus = null;
 
   // Function to init data
   async function setupData() {
@@ -52,9 +53,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const marker = L.marker(coordinate, { icon: L.icon(primaryIcon) }).addTo(searchResultLayer).on('click', function () {
       if (highlightedMarker) {
-        unhighlightMarker(highlightedMarker, record);
+        unhighlightMarker(highlightedMarker);
       }
       highlightedMarker = highlightMarker(record);
+      previousStatus = record.verified;
 
       updatePopupContent(record)
     });
@@ -170,7 +172,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       listItem.addEventListener('click', function () {
         // Remove highlight from the previously highlighted marker
         if (highlightedMarker) {
-          unhighlightMarker(highlightedMarker, result);
+          unhighlightMarker(highlightedMarker);
         }
 
         // Fly to the location on the map
@@ -178,6 +180,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Highlight the corresponding marker
         highlightedMarker = highlightMarker(result);
+        previousStatus = result.verified;
 
         // You can also update the popup content here if needed
         updatePopupContent(result);
@@ -212,9 +215,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   // Function to unhighlight the marker on the map
-  function unhighlightMarker(marker, result) {
+  function unhighlightMarker(marker) {
+    // console.log('######', previousStatus)
     // Unhighlight the marker (restore original icon, close popup, etc.)
-    const primaryIcon = getIcon(result.verified)
+    const primaryIcon = getIcon(previousStatus)
     const unhighlightIcon = Object.assign(primaryIcon, {
       shadowUrl: null, shadowSize: null
     })
