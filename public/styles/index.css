@@ -4,7 +4,6 @@ body{
   padding: 0px;
 }
 #map {
-  position: relative;
   height: 100vh;
 }
 
@@ -12,39 +11,6 @@ body{
   position: relative;
 }
 
-.search-container {
-  z-index: 1000;
-  position: absolute;
-  min-height: 50px;
-  width: 200px;
-  top: 20px;
-  left: 20px;
-  background-color: white;
-  padding-top: 25px;
-  padding-left: 25px;
-  display: none;
-}
-
-.search-container input {
-  width: auto;
-}
-
-.search-results {
-  max-height: 300px;
-  overflow-y: scroll;
-  padding: 10px;
-}
-
-.result-item {
-  margin: 10px;
-}
-
-#toggle-search-btn {
-  position: absolute;
-  left: 50px;
-  top: 10px;
-  z-index: 9999;
-}
 #popup-container {
   position: fixed;
   top: 0;
@@ -63,16 +29,14 @@ body{
 }
 #close-popup-btn {
   position: absolute;
-  top: 5px;
+  top: 6px;
   right: 8px;
   font-size: 30px;
   cursor: pointer;
   z-index: 9;
   color: #827979;
 }
-.points-image{
-  margin-top: 20px;
-}
+
 .label{
   display: block;
   width: 120px;
@@ -92,7 +56,7 @@ body{
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(255,255,255, 0.9);
+  background: white;
   cursor: pointer;
   padding: 10px;
   border-radius: 10px;
@@ -101,7 +65,7 @@ body{
 }
 .contribution_btn:hover{
   background: rgba(255,255,255, 0.7);
-  color: rgb(92, 92, 245);
+  color: rgba(0, 0, 0, 0.8);
 }
 .search{
   z-index: 1000;
@@ -111,9 +75,12 @@ body{
   width: 300px;
   height: 42px;
   border-radius: 16px;
+  /* border-top: 1px solid #dadce0; */
+  /* border-left: 1px solid #dadce0;
+  border-right: 1px solid #dadce0; */
   border-bottom: 1px solid #dadce0;
   box-shadow: 0 0 2px rgb(0 0 0/20%), 0 -1px 0 rgb(0 0 0/2%);
-  border: none;
+  /* border: none; */
 }
 .search input {
   font-size: 15px;
@@ -124,7 +91,38 @@ body{
   border: none;
   padding: 2px 14px;
   outline: none;
+  border-bottom: 1px solid #dadce0;
 }
+.search .search-btn {
+  position: absolute;
+  top: 10px;
+  left: 270px;
+  font-size: 16px;
+  color: #827979;
+}
+.result-list{
+  background: white;
+  border-radius: 0 0 16px 16px;
+  list-style: none;
+  padding: 0px;
+  /* padding: 10px 0px; */
+  font-size: 16px;
+  color: #202124;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  max-height: 400px;
+  overflow-y: scroll;
+}
+.result-list li {
+  padding: 8px 0px 8px 20px;
+  cursor: pointer;
+}
+.result-list li:hover{
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.result-list li:last-child{
+  border-radius: 0 0 16px 16px;
+}
+
 /* for ipad air/mini onwards */
 @media (min-width: 768px) {
   .search-container {

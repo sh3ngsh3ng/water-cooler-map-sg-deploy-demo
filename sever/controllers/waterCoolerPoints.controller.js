@@ -47,11 +47,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-// render WaterCoolerPoint form
-exports.renderForm = (req, res) => {
-  res.render("addPoints.hbs");
-}
-
 // Find a single WaterCoolerPoint with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -134,8 +129,8 @@ exports.deleteAll = (req, res) => {
 };
 
 // Find all published WaterCoolerPoint
-exports.findAllPublished = (req, res) => {
-  WaterCoolerPoints.find({ published: true })
+exports.findAllVertified = (req, res) => {
+  WaterCoolerPoints.find({ vertified: true })
     .then(data => {
       res.send(data);
     })
@@ -145,4 +140,17 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving WaterCoolerPoint."
       });
     });
+};
+
+exports.searchKeywords = (req, res) => {
+  const keywords = req.query.keywords
+  const condition = keywords ? { name: { $regex: new RegExp(keywords), $options: "i" } } : {};
+  WaterCoolerPoints.find(condition).then(data => {
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving WaterCoolerPoint."
+    });
+  });
 };

@@ -9,10 +9,10 @@ module.exports = app => {
   // Retrieve all waterCoolerPoints
   router.get("/", waterCoolerPoints.findAll);
 
-  router.get("/add", waterCoolerPoints.renderForm);
+  router.get("/search", waterCoolerPoints.searchKeywords);
 
-  // Retrieve all published waterCoolerPoints
-  router.get("/published", waterCoolerPoints.findAllPublished);
+  // Retrieve all vertified waterCoolerPoints
+  router.get("/vertified", waterCoolerPoints.findAllVertified);
 
   // Retrieve a single waterCoolerPoints with id
   router.get("/:id", waterCoolerPoints.findOne);

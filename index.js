@@ -42,6 +42,12 @@ db.mongoose
 app.get("/", (req, res) => {
   res.render("index.hbs")
 });
+app.get("/add", (req, res) => {
+  res.render("addPoints.hbs")
+});
+app.get("/about", (req, res) => {
+  res.render("about.hbs")
+});
 
 require("./sever/routes/waterCoolerPoints.route.js")(app);
 // set port, listen for requests
