@@ -3,7 +3,7 @@ import { find } from "./data.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
   // create the map
-  const map = initMap(); 
+  const map = initMap();
 
   // all the markers for the search will be inside here
   const searchResultLayer = L.layerGroup();
@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Function to init data
   async function setupData() {
     const results = await find();
-    // console.log('######', results)
     displaySearchResults(results);
   }
   setupData();
@@ -217,7 +216,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Function to unhighlight the marker on the map
   function unhighlightMarker(marker) {
-    // console.log('######', previousStatus)
     // Unhighlight the marker (restore original icon, close popup, etc.)
     const primaryIcon = getIcon(previousStatus)
     const unhighlightIcon = Object.assign(primaryIcon, {
@@ -225,4 +223,40 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
     marker.setIcon(L.icon(unhighlightIcon));
   }
+  const nearme = document.querySelector('#nearme');
+  nearme.addEventListener('click', function () {
+    // get user's position
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, handleError, { enableHighAccuracy: true });
+    } else {
+      console.error("Geolocation is not supported by this browser.")
+    }
+
+    function showPosition(position) {
+      // set map based on user's position
+      if (position) {
+        map.setView([position.coords.latitude, position.coords.longitude], 13);
+      } else {
+        alert('cannot get your location')
+      }
+    }
+
+    function handleError() {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          console.error("User denied the request for geolocation.");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          console.error("Location information is unavailable.");
+          break;
+        case error.TIMEOUT:
+          console.error("The request to get user location timed out.");
+          break;
+        case error.UNKNOWN_ERROR:
+          console.error("An unknown error occurred.");
+          break;
+      }
+    }
+
+  })
 });

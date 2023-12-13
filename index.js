@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path")
+const hbs = require('hbs');
+const wax = require('wax-on');
+
 const app = express();
 
 const corsOptions = {
@@ -8,11 +11,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 // parse requests of content-type - application/json
 app.use(express.json());
 
+wax.setLayoutPath('./views/layouts');
+wax.on(hbs.handlebars);
 app.set('view engine', 'hbs');
+
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
 
@@ -20,7 +25,8 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(express.static('public'))
 app.use(express.static(path.join(__dirname, 'public'), {
   index: false,
-  addPoints: false
+  addPoints: false,
+  // about: false
 }));
 
 const db = require("./sever/models");

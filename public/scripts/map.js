@@ -7,24 +7,6 @@ export function initMap() {
 
   map.setView(singapore, 12);
 
-  // get user's position
-  // if (navigator.geolocation) {
-  //   navigator.geolocation.getCurrentPosition(showPosition);
-  // } else {
-  //   console.error("Geolocation is not supported by this browser.")
-  // }
-
-  // function showPosition(position) {
-  //   // set map based on user's position
-  //   if (position) {
-  //     map.setView([position.coords.latitude, position.coords.longitude], 13);
-  //   } else {
-  //     map.setView(singapore, 13);
-  //   }
-
-  //   map.setView(singapore, 12);
-  // }
-
   L.control.zoom({
     position: 'bottomright'
   }).addTo(map);
