@@ -1,0 +1,43 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="container">
+  <h1>Unverified data</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Location Name</th>
+        <th>Postcode</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Image</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td style="width: 200px;">{{this.name}}</td>
+        <td>{{this.postcode}}</td>
+        <td>{{this.latitude}}</td>
+        <td>{{this.longitude}}</td>
+        <td>
+          {{#if this.image}} <img src={{this.image}} /> {{else}} <span>N/A</span>{{/if}}
+        </td>
+        <td>{{date this.date}}</td>
+        <td>
+          <a href="/api/points/{{this.id}}" class="btn btn-danger sm">Delete</a>
+          <a href="/api/points/vertify{{this.id}}" class="btn btn-primary sm">Verify</a>
+          <a href="/api/points/upload{{this.id}}" class="btn btn-success sm">Upload</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<script>
+  
+</script>
+{{/block}}
+
+{{/extends}}

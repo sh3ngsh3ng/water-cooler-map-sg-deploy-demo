@@ -33,12 +33,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (verified) {
       primaryIcon = {
         iconUrl: './images/water-green.png',
-        iconSize: [24, 24], // size of the icon
+        iconSize: [26, 26], // size of the icon
+        className: 'primary-marker'
       };
     } else {
       primaryIcon = {
         iconUrl: './images/water-red.png',
-        iconSize: [24, 24], // size of the icon
+        iconSize: [26, 26], // size of the icon
+        className: 'primary-marker'
       };
     }
     return primaryIcon
@@ -203,7 +205,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       const resultLatLng = L.latLng(result.latitude, result.longitude);
       const primaryIcon = getIcon(result.verified)
       const highlightIcon = Object.assign(primaryIcon, {
-        shadowUrl: './images/selection-bg.png', shadowSize: [58, 58]
+        className: 'highlight-marker'
       })
       if (markerLatLng.equals(resultLatLng)) {
         // Highlight the marker (change icon, popup, etc.)
@@ -218,10 +220,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   function unhighlightMarker(marker) {
     // Unhighlight the marker (restore original icon, close popup, etc.)
     const primaryIcon = getIcon(previousStatus)
-    const unhighlightIcon = Object.assign(primaryIcon, {
-      shadowUrl: null, shadowSize: null
-    })
-    marker.setIcon(L.icon(unhighlightIcon));
+    marker.setIcon(L.icon(primaryIcon));
   }
   const nearme = document.querySelector('#nearme');
   nearme.addEventListener('click', function () {

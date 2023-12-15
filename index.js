@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path")
 const hbs = require('hbs');
 const wax = require('wax-on');
+require('dotenv').config()
 
 const app = express();
 
@@ -17,6 +18,13 @@ app.use(express.json());
 wax.setLayoutPath('./views/layouts');
 wax.on(hbs.handlebars);
 app.set('view engine', 'hbs');
+hbs.registerHelper('date', (currentDate, pattern) => {
+  if (currentDate) {
+      return new Date(currentDate).toISOString().split('T')[0]
+  } else {
+      return '';
+  }
+})
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
@@ -44,17 +52,8 @@ db.mongoose
     process.exit();
   });
 
-// simple route
-app.get("/", (req, res) => {
-  res.render("index.hbs")
-});
-app.get("/add", (req, res) => {
-  res.render("addPoints.hbs")
-});
-app.get("/about", (req, res) => {
-  res.render("about.hbs")
-});
 
+require("./sever/routes/index.route.js")(app)
 require("./sever/routes/waterCoolerPoints.route.js")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

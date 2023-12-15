@@ -52,15 +52,17 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: white;
+  background-color: #d63384;
+  /* background: #f4dde8; */
   cursor: pointer;
-  padding: 10px;
+  padding: 6px 10px;
   border-radius: 10px;
-  font-size: 16px;
-  color: #ffc107;
+  font-size: 20px;
+  /* color: #d63384; */
+  color: white;
 }
 .contribution_btn:hover{
-  background: rgba(255,255,255, 0.7);
+  background: #ab296a;
 }
 .nearme{
   z-index: 1000;
@@ -134,6 +136,16 @@
 }
 .result-list li:last-child{
   border-radius: 0 0 16px 16px;
+}
+.primary-marker{
+  border: 2px solid white;
+  border-radius: 50%;
+}
+.highlight-marker{
+  z-index: 999!important;
+  transition: all 0.3s;
+  box-shadow: 1px 1px 5px 10px white;
+  border-radius: 50%;
 }
 
 /* for ipad air/mini onwards */

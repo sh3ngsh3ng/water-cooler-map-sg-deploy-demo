@@ -1,18 +1,18 @@
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 module.exports = app => {
   const waterCoolerPoints = require("../controllers/waterCoolerPoints.controller.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
   // Create a new waterCoolerPoints
-  router.post("/", waterCoolerPoints.create);
+  router.post("/", upload.single('image'), waterCoolerPoints.create);
 
   // Retrieve all waterCoolerPoints
   router.get("/", waterCoolerPoints.findAll);
 
   router.get("/search", waterCoolerPoints.searchKeywords);
-
-  // Retrieve all vertified waterCoolerPoints
-  router.get("/vertified", waterCoolerPoints.findAllVertified);
 
   // Retrieve a single waterCoolerPoints with id
   router.get("/:id", waterCoolerPoints.findOne);

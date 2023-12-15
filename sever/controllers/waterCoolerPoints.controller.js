@@ -1,26 +1,70 @@
 const db = require("../models");
 const WaterCoolerPoints = db.waterCoolerPoints;
+const sharp = require('sharp');
+const utils = require("../utils.js");
+
 
 // Create and Save a new WaterCoolerPoints
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
+  let data = {};
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
+  if (req.body) {
+    let { name, postcode, level, latitude, longitude, description, operator, temperature } = req.body;
+    if (!name) {
+      res.status(400).send({ message: "Location name can not be empty!" });
+      return;
+    } else if (!latitude || !longitude) {
+      const latLongData = await utils.getLatLong(postcode, name)
+      console.log('@@@@@@@', latLongData)
+      if (Number(latLongData.latt) > 0 && Number(latLongData.longt) > 0){
+        latitude = Number(latLongData.latt)
+        longitude = Number(latLongData.longt)
+      }
+    }
+    data = {
+      name, postcode, level, latitude, longitude, description, operator, temperature: temperature ? Array.isArray(temperature) ? temperature.join(',') : temperature : '', source: 'form', verified: false, verifiedBy: ''
+    }
   }
 
+  if (req.file) {
+    const maxWidth = 1000;
+    const maxHeight = 1000;
+    const outputDirectory = 'uploads';
+    const inputFile = req.file;
+    try {
+      // Maximum width and height for resizing
+      await sharp(inputFile.path)
+        .resize(maxWidth, maxHeight, {
+          fit: 'inside',
+          withoutEnlargement: true,
+        })
+        .jpeg({ quality: 80, progressive: true }) // Progressive JPEGs
+        .webp({ quality: 80 }) // Convert to WebP format
+        .toFile(`${outputDirectory}/${inputFile.originalname}`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error compressing image');
+    }
+    const imageObj = await utils.uploadToCloudinary(`${outputDirectory}/${inputFile.originalname}`)
+    if (imageObj.secure_url) {
+      data.image = imageObj.secure_url
+    }
+  } else {
+    data.image = ''
+  }
+
+  console.log('########', data)
+
   // Create a WaterCoolerPoints
-  const waterCoolerPoint = new WaterCoolerPoints({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
-  });
+  const waterCoolerPoint = new WaterCoolerPoints(data);
 
   // Save WaterCoolerPoints in the database
   waterCoolerPoint
     .save(waterCoolerPoint)
     .then(data => {
-      res.send(data);
+      res.render('success.hbs', {
+        name: data.name
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -92,7 +136,7 @@ exports.update = (req, res) => {
 // Delete a WaterCoolerPoint with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-
+console.log('id===>', id)
   WaterCoolerPoints.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
@@ -124,20 +168,6 @@ exports.deleteAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all WaterCoolerPoint."
-      });
-    });
-};
-
-// Find all published WaterCoolerPoint
-exports.findAllVertified = (req, res) => {
-  WaterCoolerPoints.find({ vertified: true })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving WaterCoolerPoint."
       });
     });
 };
