@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     const button = element.querySelector("button");
     button.addEventListener("click", function () {
-      alert("do whatever you want here");
+      window.location.href = `https://www.google.com/maps/dir/Current+Location/${record.latitude},${record.longitude}`;
     })
 
     popupContent.appendChild(element);
@@ -153,7 +153,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Function to make API request and update search results
   async function searchAPI(query) {
     const apiUrl = `/api/points/search?keywords=${query}`;
-
     try {
       const response = await axios.get(apiUrl);
       return response.data
@@ -234,7 +233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     function showPosition(position) {
       // set map based on user's position
       if (position) {
-        map.setView([position.coords.latitude, position.coords.longitude], 13);
+        map.setView([position.coords.latitude, position.coords.longitude], 15);
       } else {
         alert('cannot get your location')
       }

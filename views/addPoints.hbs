@@ -54,7 +54,7 @@
       <div class="mb-3">
         <label class="form-label">Do you have a photo of the location of the water dispenser? *If you do have, submit the photo and name the file as the postal code.
         </label>
-        <input type="file" name="image" class="form-control" aria-label="file example">
+        <input type="file" name="image" accept="image/*" class="form-control" aria-label="file example">
       </div>
       <div class="col-12">
         <button class="btn btn-primary" type="submit">Submit form</button>
@@ -62,10 +62,6 @@
       </div>
     </form>
   </div>
-  <!-- axios -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"
-    integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     function goBack() {
       history.back();

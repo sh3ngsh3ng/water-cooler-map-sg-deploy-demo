@@ -15,7 +15,6 @@ exports.create = async (req, res) => {
       return;
     } else if (!latitude || !longitude) {
       const latLongData = await utils.getLatLong(postcode, name)
-      console.log('@@@@@@@', latLongData)
       if (Number(latLongData.latt) > 0 && Number(latLongData.longt) > 0){
         latitude = Number(latLongData.latt)
         longitude = Number(latLongData.longt)
@@ -53,8 +52,6 @@ exports.create = async (req, res) => {
     data.image = ''
   }
 
-  console.log('########', data)
-
   // Create a WaterCoolerPoints
   const waterCoolerPoint = new WaterCoolerPoints(data);
 
@@ -72,6 +69,38 @@ exports.create = async (req, res) => {
           err.message || "Some error occurred while creating the WaterCoolerPoint."
       });
     });
+};
+
+//Upload image to cloud
+exports.uploadImage = async (req, res) => {
+  if (req.file) {
+    const maxWidth = 1000;
+    const maxHeight = 1000;
+    const outputDirectory = 'uploads';
+    const inputFile = req.file;
+    try {
+      // Maximum width and height for resizing
+      await sharp(inputFile.path)
+        .resize(maxWidth, maxHeight, {
+          fit: 'inside',
+          withoutEnlargement: true,
+        })
+        .jpeg({ quality: 80, progressive: true }) // Progressive JPEGs
+        .webp({ quality: 80 }) // Convert to WebP format
+        .toFile(`${outputDirectory}/${inputFile.originalname}`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error compressing image');
+    }
+    const imageObj = await utils.uploadToCloudinary(`${outputDirectory}/${inputFile.originalname}`)
+    if (imageObj.secure_url) {
+      res.status(200).send({
+        image: imageObj.secure_url
+      })
+    }
+  } else {
+    return res.status(400).send({message: 'image to update cannot be empty!'})
+  }
 };
 
 // Retrieve all WaterCoolerPoint from the database.
@@ -110,14 +139,7 @@ exports.findOne = (req, res) => {
 
 // Update a WaterCoolerPoints by the id in the request
 exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
-  }
-
   const id = req.params.id;
-
   WaterCoolerPoints.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
@@ -136,8 +158,7 @@ exports.update = (req, res) => {
 // Delete a WaterCoolerPoint with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-console.log('id===>', id)
-  WaterCoolerPoints.findByIdAndRemove(id, { useFindAndModify: false })
+  WaterCoolerPoints.findByIdAndDelete(id)
     .then(data => {
       if (!data) {
         res.status(404).send({

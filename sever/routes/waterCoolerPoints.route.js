@@ -14,6 +14,8 @@ module.exports = app => {
 
   router.get("/search", waterCoolerPoints.searchKeywords);
 
+  router.post("/upload", upload.single('image'), waterCoolerPoints.uploadImage);
+
   // Retrieve a single waterCoolerPoints with id
   router.get("/:id", waterCoolerPoints.findOne);
 

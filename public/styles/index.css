@@ -149,4 +149,12 @@
 }
 
 /* for ipad air/mini onwards */
-@media (min-width: 768px) {}
+@media (max-width: 518px) {
+  .nearme{
+    top: 64px;
+    left: 20px;
+    z-index: 1000;
+    position: absolute;
+    border-radius: 16px;
+  }
+}
