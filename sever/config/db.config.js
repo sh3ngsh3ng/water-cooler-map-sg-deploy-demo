@@ -1,3 +1,3 @@
 module.exports = {
-  url: "mongodb://127.0.0.1:27017/waterCoolerPointsDB"
+  url: "mongodb+srv://molly6943liu:e9mlaTDe3dhAcdiV@molly01.08yhouo.mongodb.net/waterCoolerPointsDB?retryWrites=true&w=majority"
 };

@@ -73,16 +73,14 @@
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
 
-  const BASE_URL = process.env.NODE_ENV === 'production' ? "https://watercoolermap.onrender.com" : "http://localhost:8080"
-
   async function handleDelete(id) {
-    const response = await axios.delete(`${BASE_URL}/api/points/${id}`);
+    const response = await axios.delete(`/api/points/${id}`);
     if (response.status === 200) {
       location.reload();
     }
   }
   async function handleVertify(id) {
-    const response = await axios.put(`${BASE_URL}/api/points/${id}`, { verified: true });
+    const response = await axios.put(`/api/points/${id}`, { verified: true });
     if (response.status === 200) {
       location.reload();
     }
@@ -101,11 +99,11 @@
         'Content-Type': mimeType,
         'Content-Disposition': `attachment; filename="${fileName}"`,
       }
-      const response = await axios.post(`${BASE_URL}/api/points/upload`, formData, {
+      const response = await axios.post(`/api/points/upload`, formData, {
         headers: headers
       });
       if (response.status === 200) {
-        const result = await axios.put(`${BASE_URL}/api/points/${id}`, response.data);
+        const result = await axios.put(`/api/points/${id}`, response.data);
         if (result.status === 200) {
           const myModal = new bootstrap.Modal(document.getElementById('myModal'));
           myModal.hide();
