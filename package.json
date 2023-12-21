@@ -4,7 +4,7 @@
   "description": "Help you find water coolers near you",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npm install", 
+    "preinstall": "npm ci", 
     "dev": "NODE_ENV=development nodemon index.js",
     "build": "NODE_ENV=production node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

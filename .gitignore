@@ -130,7 +130,6 @@ dist
 .pnp.*
 
 node_modules
-package-lock.json
 myWantedData.json
 .env
 uploads
