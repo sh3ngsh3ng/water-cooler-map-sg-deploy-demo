@@ -73,7 +73,8 @@
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
 
-  const BASE_URL = "http://localhost:8080"
+  const BASE_URL = process.env.NODE_ENV === 'production' ? "https://watercoolermap.onrender.com" : "http://localhost:8080"
+
   async function handleDelete(id) {
     const response = await axios.delete(`${BASE_URL}/api/points/${id}`);
     if (response.status === 200) {
